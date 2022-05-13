@@ -1,0 +1,9 @@
+package.json
+package-lock.json
+public
+next-env.d.ts
+.cache
+.next
+.husky
+.github
+/node-modules/
