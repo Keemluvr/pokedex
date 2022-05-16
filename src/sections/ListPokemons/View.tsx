@@ -7,7 +7,7 @@ import { ViewPokemon } from "../ViewPokemon"
 import { useRouter } from "next/router"
 
 interface IListPokemons {
-  currentPokemon: number
+  currentPokemon?: number
 }
 
 const ListPokemons: React.FC<IListPokemons> = ({ currentPokemon }) => {
