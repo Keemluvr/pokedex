@@ -9,10 +9,11 @@ export const CardWrapper = styled.div<{ color: ThemeCardBackground }>`
   position: relative;
   border-radius: 16px;
   cursor: pointer;
-  transition: box-shadow 0.1s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
   &:hover {
     box-shadow: ${({ theme }) => theme.preDefined.cardBoxShadowHover};
+    transform: scale(1.02);
   }
 `
 

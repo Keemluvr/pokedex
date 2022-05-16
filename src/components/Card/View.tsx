@@ -14,11 +14,12 @@ import theme from "@/styles/theme"
 
 interface ICard {
   pokemon: Pokemon
+  handleModal: (pokemonId: number, opened?: boolean) => void
 }
 
-const Card: React.FC<ICard> = ({ pokemon }) => {
+const Card: React.FC<ICard> = ({ pokemon, handleModal }) => {
   return (
-    <CardWrapper color={pokemon.color}>
+    <CardWrapper color={pokemon.color} onClick={() => handleModal(pokemon.id)}>
       <CardImage src={pokemon.sprites.other.home.front_default || undefined} />
       <CardDescription>
         <CardTitle>{pokemon.name}</CardTitle>

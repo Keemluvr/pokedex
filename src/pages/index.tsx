@@ -1,6 +1,6 @@
-import { Layout } from "@/layout"
-import { ListPokemons } from "@/sections"
 import { NextPage } from "next/types"
+import { ListPokemons } from "@/sections"
+import { Layout } from "@/layout"
 
 const Home: NextPage = () => {
   return (

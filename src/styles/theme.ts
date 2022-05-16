@@ -1,11 +1,14 @@
 const theme = {
   color: {
+    primary: "#B33433",
+    secondary: "#202020",
     background: "#FBFBFB",
     loaderBackground: "rgba(255,255,255,.5)",
     border: "rgba(152,152,152, .2)",
     idBackground: "#E86A6A",
     weightBackground: "#F2C94C",
     heightBackground: "#BDBDBD",
+    modalBackground: "rgba(255,255,255,.6)",
     text: {
       normal: "#181717",
       withBackground: "#FFFFFF"
@@ -32,6 +35,7 @@ const theme = {
   preDefined: {
     cardBoxShadow: "0 8px 16px 0 rgba(152, 152, 152, 0.2)",
     cardBoxShadowHover: "0 14px 30px 0 rgba(152, 152, 152, 0.3)",
+    modalBoxShadow: "0 10px 15px 0px rgb(152 152 152 / 4%)",
     cardBackground: {
       black: "#757575",
       blue: "#C2F2FE",
@@ -43,6 +47,18 @@ const theme = {
       red: "#F8AEA4",
       white: "#FFFFFF",
       yellow: "#FDE6C4"
+    },
+    numberBackground: {
+      black: "#4F4F4F",
+      blue: "#56CCF2",
+      brown: "#786661",
+      gray: "#919090",
+      green: "#449653",
+      pink: "#ed85cf",
+      purple: "#a98ff7",
+      red: "#f28a7c",
+      white: "#c4c2c2",
+      yellow: "#fccc83"
     },
     typeBackground: {
       normal: "#A4ACAF",

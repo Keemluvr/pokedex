@@ -58,14 +58,14 @@ const GlobalStyle = createGlobalStyle`
     }
     
     ::-webkit-scrollbar-track {
-        background: ${({ theme }) => theme.color.text};
+        background: ${({ theme }) => theme.color.background};
     }
     
     ::-webkit-scrollbar-thumb {
-        background:  ${({ theme }) => theme.color.background};
-        border: 2px solid ${({ theme }) => theme.color.background};
+        background:  ${({ theme }) => theme.color.primary};
+        border: 2px solid ${({ theme }) => theme.color.primary};
         border-radius: 15px;
     }
-`
+    `
 
 export default GlobalStyle

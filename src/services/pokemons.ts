@@ -1,11 +1,10 @@
-import { AxiosResponse } from "axios"
 import { Dispatch, SetStateAction } from "react"
 import http from "@/helpers/http"
 import {
-  NamedAPIResourceList,
   PokemonColor,
   PokemonColorList,
-  PokemonList
+  PokemonList,
+  ThemeCardBackground
 } from "@/types"
 import { Pokemon } from "@/types"
 
@@ -20,7 +19,7 @@ export const listPokemons = async (
 
   const results = await Promise.all(
     (pokemons as PokemonList)?.results?.map(async (pokemon) => {
-      const info = (await getPokemonByName(pokemon.name)) as Pokemon
+      const info = (await getPokemonByIdOrName(pokemon.name)) as Pokemon
       let color = "black"
 
       colors?.results?.map((c) => {
@@ -40,13 +39,29 @@ export const listPokemons = async (
   return results
 }
 
-export const getPokemonByName = async (
-  name: string,
+export const getPokemonByIdOrName = async (
+  name: string | number,
   setLoading?: Dispatch<SetStateAction<boolean>>
 ): Promise<Pokemon | undefined> => {
   const result = await http<Pokemon>().get(`/pokemon/${name}`)
-  setLoading?.(false)
-  return result?.data
+  const pokemon = result?.data
+  const colors = await getColors()
+  let color = "black"
+
+  if (pokemon) {
+    colors?.results?.map((c) => {
+      if (!!c.species.find((specie) => specie.name === pokemon.name))
+        color = c.name
+    })
+
+    setLoading?.(false)
+
+    if (pokemon)
+      return {
+        ...pokemon,
+        color: color as ThemeCardBackground
+      }
+  }
 }
 
 export const getTypeByName = async (
