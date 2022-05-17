@@ -1,8 +1,13 @@
 import React, { useEffect, useState } from "react"
 import { listPokemons, getPokemonByIdOrName } from "@/services/pokemons"
-import { Card, Loader, Modal, Pagination } from "@/components"
+import { Card, Input, Loader, Modal, Pagination } from "@/components"
 import { IPagination, Pokemon, PokemonList } from "@/types"
-import { ListPokemonsCardWrapper, ListPokemonsImg } from "./Styles"
+import {
+  ListPokemonsCardWrapper,
+  ListPokemonsImg,
+  ListPokemonsSearch,
+  ListPokemonsNotFound
+} from "./Styles"
 import { ViewPokemon } from "../ViewPokemon"
 import { useRouter } from "next/router"
 
@@ -12,9 +17,10 @@ interface IListPokemons {
 
 const ListPokemons: React.FC<IListPokemons> = ({ currentPokemon }) => {
   const router = useRouter()
-
   const [pokemons, setPokemons] = useState<PokemonList>()
   const [loading, setLoading] = useState<boolean>(true)
+  const [pokemonOpened, setPokemonOpened] = useState<Pokemon>()
+  const [search, setSearch] = useState<string | null>()
   const [pagination, setPagination] = useState<IPagination>({
     current: 0,
     total: 0,
@@ -23,11 +29,15 @@ const ListPokemons: React.FC<IListPokemons> = ({ currentPokemon }) => {
   const [openModal, setOpenModal] = useState<boolean>(
     currentPokemon ? true : false
   )
-  const [pokemonOpened, setPokemonOpened] = useState<Pokemon>()
 
   useEffect(() => {
     getPokemons()
   }, [])
+
+  useEffect(() => {
+    if (search) searchPokemon(search as string)
+    else getPokemons()
+  }, [search])
 
   useEffect(() => {
     if (currentPokemon) getPokemon(currentPokemon)
@@ -76,6 +86,29 @@ const ListPokemons: React.FC<IListPokemons> = ({ currentPokemon }) => {
       )
   }
 
+  const searchPokemon = async (search: string) => {
+    const pokemon = await getPokemonByIdOrName(search)
+    setPokemons({
+      count: pokemon ? 1 : 0,
+      next: null,
+      previous: null,
+      results: pokemon ? [pokemon as Pokemon] : []
+    })
+    setPagination({
+      ...pagination,
+      current: 1,
+      total: 1
+    })
+  }
+
+  const onChangeInputSearch = ({
+    target: { value }
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setTimeout(() => {
+      setSearch(value)
+    }, 1500)
+  }
+
   return (
     <ListPokemonsCardWrapper>
       <Loader loading={loading} />
@@ -85,29 +118,53 @@ const ListPokemons: React.FC<IListPokemons> = ({ currentPokemon }) => {
         alt="pokemon logo"
       />
 
-      {pokemons?.results?.map((pokemon) => (
-        <Card key={pokemon.id} pokemon={pokemon} handleModal={handleModal} />
-      ))}
-
-      {pokemons?.results && (
-        <Pagination
-          previous={pokemons.previous}
-          current={pagination.current}
-          next={pokemons.next}
-          onChange={getPokemons}
+      <ListPokemonsSearch>
+        <Input
+          withIcon="search"
+          placeholder="Procurar Pokemon"
+          onChange={onChangeInputSearch}
         />
-      )}
+      </ListPokemonsSearch>
 
-      {pokemonOpened && (
-        <Modal open={openModal} handleModal={() => handleModal()}>
-          {openModal && (
-            <ViewPokemon
-              pokemon={pokemonOpened}
-              color={pokemonOpened.color}
+      {search && pokemons?.results.length !== 1 ? (
+        <ListPokemonsNotFound>
+          <img
+            src="/static/assets/images/not-found.png"
+            alt="nenhum pokemon encontrado"
+          />
+          <h1>Ooops! A busca não foi efetiva.</h1>
+        </ListPokemonsNotFound>
+      ) : (
+        <>
+          {pokemons?.results?.map((pokemon) => (
+            <Card
+              key={pokemon.id}
+              pokemon={pokemon}
               handleModal={handleModal}
             />
+          ))}
+
+          {!!pokemons?.results.length && pokemons?.results.length > 1 && (
+            <Pagination
+              previous={pokemons.previous}
+              current={pagination.current}
+              next={pokemons.next}
+              onChange={getPokemons}
+            />
           )}
-        </Modal>
+
+          {pokemonOpened && (
+            <Modal open={openModal} handleModal={() => handleModal()}>
+              {openModal && (
+                <ViewPokemon
+                  pokemon={pokemonOpened}
+                  color={pokemonOpened.color}
+                  handleModal={handleModal}
+                />
+              )}
+            </Modal>
+          )}
+        </>
       )}
     </ListPokemonsCardWrapper>
   )
