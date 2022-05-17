@@ -10,6 +10,7 @@ const theme = {
     heightBackground: "#BDBDBD",
     modalBackground: "rgba(255,255,255,.6)",
     disabled: "#BDBDBD",
+    inputBorder: "#F0F0F0",
     text: {
       normal: "#181717",
       withBackground: "#FFFFFF"
