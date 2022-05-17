@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const ListPokemons = styled.section``
 
 export const ListPokemonsCardWrapper = styled.div`
-  margin-top: 50px;
+  margin: 50px auto;
   display: flex;
   gap: 40px 20px;
   flex-wrap: wrap;

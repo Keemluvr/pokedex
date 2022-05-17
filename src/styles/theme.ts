@@ -1,14 +1,15 @@
 const theme = {
   color: {
-    primary: "#B33433",
-    secondary: "#202020",
+    primary: "#3E57AF",
+    secondary: "#F9C606",
     background: "#FBFBFB",
-    loaderBackground: "rgba(255,255,255,.5)",
+    loaderBackground: "rgba(255,255,255,.7)",
     border: "rgba(152,152,152, .2)",
     idBackground: "#E86A6A",
     weightBackground: "#F2C94C",
     heightBackground: "#BDBDBD",
     modalBackground: "rgba(255,255,255,.6)",
+    disabled: "#BDBDBD",
     text: {
       normal: "#181717",
       withBackground: "#FFFFFF"

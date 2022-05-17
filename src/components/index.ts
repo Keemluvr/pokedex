@@ -1,3 +1,5 @@
 export { Card } from "./Card"
 export { Tag } from "./Tag"
 export { Modal } from "./Modal"
+export { Pagination } from "./Pagination"
+export { Loader } from "./Loader"
