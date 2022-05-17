@@ -9,11 +9,10 @@ import {
 import { Pokemon } from "@/types"
 
 export const listPokemons = async (
-  offset?: number,
-  limit?: number,
+  path?: string,
   setLoading?: Dispatch<SetStateAction<boolean>>
 ): Promise<PokemonList | undefined> => {
-  const result = await http<PokemonList>().get("/pokemon")
+  const result = await http<PokemonList>().get(path ? path : "/pokemon")
   const pokemons = result?.data
   const colors = await getColors()
 
